@@ -11,14 +11,14 @@
 let a = Math.round(Math.random() * 100) - Math.round(Math.random() * 100);
 let b = Math.round(Math.random() * 100) - Math.round(Math.random() * 100);
 
-if (a >= 0 && b >= 0) {
+if (a > -0.1 && b > -0.1) {
     console.log('Разность чисел a: ' + a + ' и b: ' + b + ' равна: ' + (a - b));
 }
 
-if (a < 0 && b < 0) {
-    console.log('Произведение чисел a: ' + a + ' и b: ' + b + ' равно: ' + (a * b));
+else if ((a >= 0 && b < 0) || (a < 0 && b >= 0)) {
+    console.log('Сумма чисел a: ' + a + ' и b: ' + b + ' равна: ' + (a + b));
 }
 
-if ((a >= 0 && b < 0) || (a < 0 && b >= 0)) {
-    console.log('Сумма чисел a: ' + a + ' и b: ' + b + ' равна: ' + (a + b));
+else {
+    console.log('Произведение чисел a: ' + a + ' и b: ' + b + ' равно: ' + (a * b));
 }
