@@ -22,7 +22,7 @@ function numberObjectConverter(inputNum) {
 }
 
 function inputString(inputNumber) {
-    if (isNaN(inputNumber) || (Number(inputNumber) < 0 || Number(inputNumber) >= 1000)) {
+    if (isNaN(inputNumber) || inputNumber === '' || (inputNumber < 0 || inputNumber >= 1000)) {
         console.log('Необходимо было ввести число от 0 до 999');
         return console.log(numberObjectConverter(false));
     }
