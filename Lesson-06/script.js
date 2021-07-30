@@ -12,15 +12,20 @@ const bueyrBox = {
 
     run() {
         this.containerElement = document.createElement('div');
+        this.containerElement.setAttribute('id', 'basket');
         document.body.appendChild(this.containerElement);
         this.outputMessage();
     },
 
     inputProduct(elem1, elem2, elem3) {
+        if (this["product name"].length != 0) {
+            document.getElementById('basket').remove();
+        }
+
         let checkFlag = false;
         for (const elem in this["product name"]) {
             if (this["product name"][elem][0] === elem1) {
-                this["product name"][elem][1] = + elem2
+                this["product name"][elem][1] += parseFloat(elem2);
                 checkFlag = true;
                 break;
             }
@@ -33,23 +38,34 @@ const bueyrBox = {
 
     outputMessage() {
         this.containerElement.innerHTML = '';
-        const showMessage = document.createElement('h3');
+        const showMessage = document.createElement('h4');
         this.containerElement.style.marginTop = '20px';
 
         if (this["product name"].length === 0) {
             showMessage.innerHTML = 'Корзина пуста';
         }
         else {
-            showMessage.innerHTML = 'В корзине: ' + this["product name"].length + ' товаров на сумму '
+            showMessage.innerHTML = 'В корзине:<br>' + this.showProductcs() + 'На сумму: '
                 + this.countBasketPrice() + ' руб.'
         }
         this.containerElement.appendChild(showMessage);
     },
 
+    showProductcs() {
+        let elem = '';
+        for (const el in this["product name"]) {
+            elem += '- ' + this["product name"][el][0] + ' ******* '
+                + Math.trunc(this["product name"][el][1] * 100) / 100 +
+                ' шт. ******* ' + Math.trunc(this["product name"][el][1] * this["product name"][el][2] * 100) / 100 +
+                ' ******* ' + this["product name"][el][2] + ' за у.е.<br>'
+        }
+        return elem;
+    },
+
     countBasketPrice() {
         let boxSum = 0;
         for (const unit in this["product name"]) {
-            boxSum += Math.floor((this["product name"][unit][1] * this["product name"][unit][2]) * 100) / 100;
+            boxSum += Math.trunc((this["product name"][unit][1] * this["product name"][unit][2]) * 100) / 100;
 
         }
         return boxSum;
@@ -92,12 +108,11 @@ const productCatalog = {
 
     containerClickHandler(event) {
         if (event.target.tagName !== 'P') return;
-        console.log(event.target.dataset.product, event.target.dataset.count, event.target.dataset.price);
         this.buyProduct(event.target.dataset.product, event.target.dataset.count, event.target.dataset.price);
     },
 
     buyProduct(elem1, elem2, elem3) {
-        bueyrBox.inputProduct(elem1, elem2, elem3);
+        bueyrBox.inputProduct(elem1, parseFloat(elem2), parseFloat(elem3));
     },
 
 };
