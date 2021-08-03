@@ -355,7 +355,7 @@ const game = {
   },
 
   getRandomFreeCoordinates() {
-    const exclude = [this.food.getCoordinates(), this.wall.getBodyWall(), ...this.snake.getBody()];
+    const exclude = [this.food.getCoordinates(), ...this.wall.getBodyWall(), ...this.snake.getBody()];
 
     while (true) {
       const rndPoint = {
